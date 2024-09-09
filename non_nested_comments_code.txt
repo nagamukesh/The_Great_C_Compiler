@@ -1,0 +1,4 @@
+if u do not want to accept nested comments
+"//".*                                  { /* SINGLE LINE COMMENT */ }
+"/*"([^*]|[*]+[^*/])*[*]+[/]            { /* multiline comment */}
+"/*"                                    { yyerror("UNTERMINATED COMMENT"); exit(1); }

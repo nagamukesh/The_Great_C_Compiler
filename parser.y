@@ -6,6 +6,7 @@
 	#include "ctype.h"
 	#include "string.h"
 	void insert_type();
+	void insert_class();
 	void insert_value();
 	void insert_dimensions();
 	void insert_pdl(int pdl);
@@ -80,7 +81,7 @@ declaration
 			| structure_dec;
 
 structure_dec
-			: STRUCT IDENTIFIER { insert_type(); } '{' structure_content  '}' ';';
+			: STRUCT IDENTIFIER { insert_type(); insert_class(0);} '{' structure_content  '}' ';';
 
 structure_content : variable_dec structure_content | ;
 
@@ -99,7 +100,7 @@ multiple_variables
 			| ;
 
 identifier_name 
-			: IDENTIFIER { insert_type(); } extended_identifier;
+			: IDENTIFIER { insert_type(); insert_class(2);} extended_identifier;
 
 extended_identifier : array_identifier | '='{strcpy(previous_operator,"=");} expression ; 
 
@@ -153,7 +154,7 @@ short_grammar
 function_dec
             : function_name '(' parameters ')'  function_data;
 
-function_name: datatype IDENTIFIER{strcpy(current_function,current_identifier);};
+function_name: datatype IDENTIFIER{strcpy(current_function,current_identifier);insert_class(1);};
 
 function_data:'{' statments '}'   {insert_pdl(0);}
 		| {insert_pdl(1);};
@@ -298,7 +299,7 @@ func
 			| func_call | constant;
 
 func_call
-			: IDENTIFIER '('{strcpy(previous_operator,"(");} arguments ')' ;
+			: IDENTIFIER '('{strcpy(previous_operator,"(");insert_class(1);} arguments ')' ;
 
 arguments 
 			: arguments_list | ;
@@ -322,6 +323,7 @@ extern FILE *yyin;
 extern int yylineno;
 extern char *yytext;
 void insert_SymbolTable_type(char *,char *);
+void insert_SymbolTable_class(char *,int);
 void insert_SymbolTable_value(char *, char *);
 void insert_ConstantTable(char *, char *);
 void insert_SymbolTable_arraydim(char *, char *);
@@ -333,7 +335,7 @@ void printSymbolDataLine();
 
 int main()
 {
-	yyin = fopen("test2.c", "r");
+	yyin = fopen("test12.c", "r");
 	yyparse();
 	if(flag==0) printf("VALID PARSE\n");
 	printf("\n");
@@ -366,6 +368,10 @@ void yyerror(char *s)
 void insert_type()
 {
 	insert_SymbolTable_type(current_identifier,current_type);
+}
+
+void insert_class(int a){
+	insert_SymbolTable_class(current_identifier,a);
 }
 
 void insert_value()

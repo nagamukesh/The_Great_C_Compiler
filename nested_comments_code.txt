@@ -1,0 +1,21 @@
+"//".*  																		{ }
+
+"/*"             							 { BEGIN MLCOMMENT; }
+<MLCOMMENT>"/*"							 	 { ++nested_count; 
+												check_nested = 1;
+											 }	
+<MLCOMMENT>"*"+"/"        					 { if (nested_count) --nested_count;
+											   else{ if(check_nested){
+														check_nested = 0;
+														BEGIN INITIAL;
+														}
+													 else{
+														BEGIN INITIAL;
+													}
+											    } 
+											 }
+<MLCOMMENT>"*"+           					 ; 
+<MLCOMMENT>[^/*\n]+						 	 ;
+<MLCOMMENT>[/]    							 ;
+<MLCOMMENT>\n     							 ;
+<MLCOMMENT><<EOF>>							 { printf("Line No. %d ERROR: MULTI LINE COMMENT NOT CLOSED\n", yylineno); return 0;}

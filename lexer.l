@@ -89,7 +89,25 @@ void insert_ConstantTable(char* name, char* type){
 				strcpy(ST[i].symbol_type,str2);
 			}
 		}
-    	}
+    }
+
+	void insert_SymbolTable_class(char *str1, int a){
+		for(int i=0;i<TABLE_SIZE;i++){
+			if(strcmp(ST[i].symbol_name,str1)==0)
+			{
+				if(a==0){
+					strcpy(ST[i].class,"STRUCTURE");
+				}
+				else if(a==1){
+					strcpy(ST[i].class,"FUNCTION");
+				}
+				else if(a==2){
+					strcpy(ST[i].class,"VARIABLE");
+				}
+			}
+		}
+	}
+
 	void insert_SymbolTable_value(char *str1, char *str2)
 	{
 		for(int i = 0 ; i < TABLE_SIZE ; i++)
@@ -188,16 +206,38 @@ num              	[0-9]
 alpha              	[a-zA-Z]
 alphanum            {alpha}|{num}
 escape_sequences    0|a|b|f|n|r|t|v|"\\"|"\""|"\'"
+%x MLCOMMENT
 DE "define"
 IN "include"
 
 %%
 
+	int nested_count = 0;
+	int check_nested = 0;
+
 "#include"[ ]*"<"{alpha}({alphanum})*".h>"                                  	{ }
 "#define"[ ]+(_|{alpha})({alphanum})*[ ]*(.)+                                   { } 
-"//".*                                  { /* SINGLE LINE COMMENT */ }
-"/*"([^*]|[*]+[^*/])*[*]+[/]            { /* multiline comment */}
-"/*"                                    { yyerror("UNTERMINATED COMMENT"); exit(1); }
+"//".*  																		{ }
+
+"/*"             							 { BEGIN MLCOMMENT; }
+<MLCOMMENT>"/*"							 	 { ++nested_count; 
+												check_nested = 1;
+											 }	
+<MLCOMMENT>"*"+"/"        					 { if (nested_count) --nested_count;
+											   else{ if(check_nested){
+														check_nested = 0;
+														BEGIN INITIAL;
+														}
+													 else{
+														BEGIN INITIAL;
+													}
+											    } 
+											 }
+<MLCOMMENT>"*"+           					 ; 
+<MLCOMMENT>[^/*\n]+						 	 ;
+<MLCOMMENT>[/]    							 ;
+<MLCOMMENT>\n     							 ;
+<MLCOMMENT><<EOF>>							 { printf("Line No. %d ERROR: MULTI LINE COMMENT NOT CLOSED\n", yylineno); return 0;}
 "auto"					{ return AUTO; }
 "break"					{ insert_SymbolTable_line(yytext, yylineno); insert_SymbolTable(yytext, "Keyword");  return BREAK;}
 "bool"					{ return BOOL; }
