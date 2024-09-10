@@ -69,6 +69,7 @@ void insert_ConstantTable(char* name, char* type){
 			if(ST[i].exist == 0){
 				strcpy(ST[i].symbol_name, name);
 				strcpy(ST[i].symbol_type, type);
+				strcpy(ST[i].parameters, "No parameters");
 				strcpy(ST[i].array_dimensions, "No dimensions");
 				ST[i].line_number=yylineno;
 				ST[i].nesting_level=curly_count;
@@ -148,7 +149,7 @@ void insert_ConstantTable(char* name, char* type){
 		{
 			if(strcmp(ST[i].symbol_name,str1)==0)
 			{
-				strcat(ST[i].parameters," ");
+				strcpy(ST[i].parameters,"  ");
                 strcat(ST[i].parameters,param);
 			}
 		}

@@ -335,7 +335,7 @@ void printSymbolDataLine();
 
 int main()
 {
-	yyin = fopen("test12.c", "r");
+	yyin = fopen("test2.c", "r");
 	yyparse();
 	if(flag==0) printf("VALID PARSE\n");
 	printf("\n");
