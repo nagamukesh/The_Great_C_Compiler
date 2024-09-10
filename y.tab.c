@@ -81,7 +81,7 @@
 	void insert_dimensions();
 	void insert_pdl(int pdl);
 	void insert_parameters();
-	extern int flag=0;
+	int flag=0;
 	int insert_flag = 0;
 	int pdl;
 
@@ -2003,7 +2003,7 @@ void printSymbolDataLine();
 
 int main()
 {
-	yyin = fopen("test2.c", "r");
+	yyin = fopen("test1.c", "r");
 	yyparse();
 	if(flag==0) printf("VALID PARSE\n");
 	printf("\n");

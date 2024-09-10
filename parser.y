@@ -11,7 +11,7 @@
 	void insert_dimensions();
 	void insert_pdl(int pdl);
 	void insert_parameters();
-	extern int flag=0;
+	int flag=0;
 	int insert_flag = 0;
 	int pdl;
 
