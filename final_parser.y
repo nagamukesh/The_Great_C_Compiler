@@ -1127,9 +1127,12 @@ int main()
                 printf("%1s %s\n\n", " ", "-------------------------------------");
         }
         if(flag==0){
-        	printf("\n\nLevel Order Traversal\n\n");
+        	printf("\n\nLevel Order Traversal of AST\n\n");
         	levelOrderTraversal(head);
         }
+	else{
+		printf("No AST");
+	}
 }
 
 void yyerror(char *s)
