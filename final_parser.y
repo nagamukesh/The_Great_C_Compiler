@@ -1127,7 +1127,7 @@ int main()
                 printf("%1s %s\n\n", " ", "-------------------------------------");
         }
         if(flag==0){
-        	printf("\n\nLevelOrderTraversal\n");
+        	printf("\n\nLevel Order Traversal\n\n");
         	levelOrderTraversal(head);
         }
 }
