@@ -1126,7 +1126,10 @@ int main()
                 printSymbolDataLine();
                 printf("%1s %s\n\n", " ", "-------------------------------------");
         }
-        levelOrderTraversal(head);
+        if(flag==0){
+        	printf("\n\nLevelOrderTraversal\n");
+        	levelOrderTraversal(head);
+        }
 }
 
 void yyerror(char *s)
@@ -1171,5 +1174,4 @@ int yywrap()
 {
         return 1;
 }
-
 
