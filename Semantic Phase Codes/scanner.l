@@ -126,7 +126,7 @@
 				strcpy(ST[value].name,str1);
 				strcpy(ST[value].class,str2);
 				ST[value].length = strlen(str1);
-				ST[value].nesting_val = 9999;
+				ST[value].nesting_val = 0;
 				ST[value].params_count = -1;
 				insertSTline(str1,yylineno);
 				return;
@@ -146,7 +146,7 @@
 			strcpy(ST[pos].name,str1);
 			strcpy(ST[pos].class,str2);
 			ST[pos].length = strlen(str1);
-			ST[pos].nesting_val = 9999;
+			ST[pos].nesting_val =0;
 			ST[pos].params_count = -1;
 		}
 	}
@@ -177,7 +177,7 @@
 
 	void insertSTnest(char *s, int nest)
 	{
-		if(lookupST(s) && ST[lookupST(s)].nesting_val != 9999)
+		if(lookupST(s) && ST[lookupST(s)].nesting_val != 0)
 		{
              int pos = 0;
              int value = hash(s);
@@ -283,7 +283,7 @@
 		{
 			if(ST[i].nesting_val == nesting)
 			{
-				ST[i].nesting_val = 99999;
+				ST[i].nesting_val = 9999;
 			}
 		}
 
@@ -354,7 +354,7 @@
 			{				
 				if(ST[i].nesting_val == current_nesting)
 				{
-			        return 1;
+			        	return 1;
 				}
 			}
 		}
@@ -458,11 +458,10 @@
 	{
 		process_array_dimensions();
 
-
-		printf("%10s | %15s | %10s | %10s | %10s | %15s | %10s |\n","symbol name", "Class", "Type","Value", "Line No.", "Nesting Count", "Count of Params");
-		for(int i=0;i<100;i++) {
-			printf("_");
-		}
+		printf("---------------------------------------------------------------------------------------------------------------");
+		printf("\n");
+		printf("%10s | %15s | %10s | %10s | %10s | %15s | %20s |\n","Symbol name", "Class", "Type","Value", "Line No.", "Nesting Count", "Count of Params");
+		printf("---------------------------------------------------------------------------------------------------------------");
 		printf("\n");
 		for(int i = 0 ; i < 1007 ; i++)
 		{
@@ -510,7 +509,7 @@
 			// }
 
 			// printf("%10s | %15s | %10s | %10s | %10s | %15d | %10d |\n",ST[i].name, ST[i].class, ST[i].type, ST[i].value, line_no_str, ST[i].nesting_val, ST[i].params_count);
-			printf("%10s | %15s | %10s | %10s | %10d | %15d | %10d |\n",ST[i].name, ST[i].class, ST[i].type, ST[i].value, ST[i].lineno, ST[i].nesting_val, ST[i].params_count);
+			printf("%10s | %16s | %10s | %10s | %10d | %15d | %20d |\n",ST[i].name, ST[i].class, ST[i].type, ST[i].value, ST[i].lineno, ST[i].nesting_val, ST[i].params_count);
 
 
 
@@ -527,17 +526,17 @@
 
 	void printCT()
 	{
-		printf("%10s | %15s\n","constant name", "constant type");
-		for(int i=0;i<85;i++) {
-			printf("_");
-		}
+		printf("----------------------------------------------");
+		printf("\n");
+		printf(" %20s | %20s |\n","Constant name", "Constant type");
+		printf("----------------------------------------------");
 		printf("\n");
 		for(int i = 0 ; i < 1007 ; i++)
 		{
 			if(CT[i].length == 0)
 				continue;
 
-			printf("%10s | %15s\n",CT[i].name, CT[i].type);
+			printf(" %20s | %20s |\n",CT[i].name, CT[i].type);
 		}
 
 		// printf("%s\n",array_dim_str);
