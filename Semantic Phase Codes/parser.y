@@ -102,14 +102,16 @@ declaration
 			: variable_declaration 
 			| function_declaration      {func_count++;}
 			| structure_definition
-            | enum_declaration;
+            		| enum_declaration
+            		;
 
 variable_declaration
 			: type_specifier variable_declaration_list ';' 
 			| storage_classes type_specifier variable_declaration_list ';'
 			| storage_classes CONST type_specifier variable_declaration_list ';'
 			| CONST type_specifier variable_declaration_list ';'
-			| structure_declaration ';';
+			| structure_declaration ';'
+			;
 
 storage_classes
             : AUTO | STATIC | REGISTER | EXTERN | VOLATILE
