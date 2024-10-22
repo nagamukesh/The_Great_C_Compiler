@@ -234,7 +234,7 @@ scanf_parameters
 			| string_constant;
 
 compound_statement 
-			: {current_nesting++;} '{'  statment_list  '}' {deletedata(current_nesting);current_nesting--;}  ;
+			: {current_nesting++;} '{'  statment_list  '}' {current_nesting--;}  ;
 
 statment_list 
 			: statement statment_list 
@@ -490,9 +490,12 @@ int main()
 		printf( "PASSED: Semantic Phase\n");
 		printf("%30s"  "PRINTING SYMBOL TABLE"  "\n\n", " ");
 		printST();
-		printf("%30s %s\n", " ", "-------------------------------");
+		printf("---------------------------------------------------------------------------------------------------------------");
+		printf("\n");
 		printf("\n\n%30s"  "PRINTING CONSTANT TABLE"  "\n\n", " ");
 		printCT();
+		printf("----------------------------------------------");
+		printf("\n");
 	}
 	else
 	{
