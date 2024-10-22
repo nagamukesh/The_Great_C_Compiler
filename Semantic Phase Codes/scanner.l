@@ -4,6 +4,7 @@
 	#include <stdlib.h>
 	#include "y.tab.h"
 
+	int integer_value=1, float_value=2, char_value=3, not_present=0;
 	struct symboltable
 	{
 		char name[100];
@@ -16,6 +17,10 @@
 		int length;
 		int params_count;
 	}ST[1007];
+
+	char curid[20];
+	char curtype[20];
+	char curval[20];
 
 	struct constanttable
 	{
@@ -153,11 +158,22 @@
 
 	void insertSTtype(char *str1, char *str2)
 	{
+		int checking_val=check_type(curval);
 		for(int i = 0 ; i < 1007 ; i++)
 		{
 			if(strcmp(ST[i].name,str1)==0)
 			{
-				strcpy(ST[i].type,str2);
+				if(checking_val==0){
+					strcpy(ST[i].type, str2);	
+				}
+				else if(checking_val==1){
+					if(strcmp(str2, "int")==0) strcpy(ST[i].type, str2);
+					else return;
+				}
+				else if(checking_val==2){
+					if(strcmp(str2,"float")==0) strcpy(ST[i].type, str2);
+					else return;
+				}
 			}
 		}
     }
@@ -173,6 +189,7 @@
 		}
 		printf("\n");
 	}
+
 
 
 	void insertSTnest(char *s, int nest)
@@ -217,6 +234,44 @@
 			{
 				ST[i].params_count = count;
 			}
+		}
+	}
+
+	int check_type(char* str){
+		
+		int value = hash(str);
+		if(CT[value].length == 0)
+			return 0;
+		else if(strcmp(CT[value].name,str)==0){
+			if(strcmp(CT[value].type,"Number Constant")==0){
+						return 1;
+			}
+			else if (strcmp(CT[value].type,"Floating Constant")==0){
+						return 2;
+			}
+			else{
+						return 3;
+			}
+		}
+			
+		else
+		{
+			for(int i = value + 1 ; i!=value ; i = (i+1)%1007)
+			{
+				if(strcmp(CT[i].name,str)==0)
+				{
+					if(strcmp(CT[i].type,"Number Constant")==0){
+						return 1;
+					}
+					else if (strcmp(CT[i].type,"Floating Constant")==0){
+						return 2;
+					}
+					else{
+						return 3;
+					}
+				}
+			}
+			return 0;
 		}
 	}
 
@@ -541,10 +596,6 @@
 
 		// printf("%s\n",array_dim_str);
 	}
-	char curid[20];
-	char curtype[20];
-	char curval[20];
-
 %}
 
 DE "define"
