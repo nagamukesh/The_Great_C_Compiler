@@ -42,4 +42,5 @@ int main()
     printf("%d",c);
     c = (a!=b);
     printf("%d",c);
+    return x;
 }
