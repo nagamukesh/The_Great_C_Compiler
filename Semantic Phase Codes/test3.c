@@ -1,3 +1,5 @@
+//Function of non void type does not return 
+
 #include <stdio.h>
 
 int main()
