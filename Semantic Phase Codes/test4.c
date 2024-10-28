@@ -2,7 +2,7 @@
 
 int square(int a)
 {
-    return a * a;
+    return 1;
 }
 
 struct abc
