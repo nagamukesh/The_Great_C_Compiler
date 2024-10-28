@@ -28,7 +28,7 @@ int main()
         case 3:
             printf("asfas");
             break;
-        case 4 ... 7:
+        case 7:
             scanf("%d", n);
             break;
         default:
