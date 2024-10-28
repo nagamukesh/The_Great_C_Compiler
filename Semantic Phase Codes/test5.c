@@ -1,3 +1,4 @@
+//Function of non void type does not return
 //for loop
 //continue
 //while loop
