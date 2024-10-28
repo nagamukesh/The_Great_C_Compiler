@@ -1,3 +1,5 @@
+//Incompatible value assigned
+
 #include<stdio.h>
 int main()
 {
