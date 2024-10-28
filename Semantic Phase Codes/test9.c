@@ -3,12 +3,12 @@
 //logical operations
 
 #include<stdio.h>
-int lauda = 1;
+int l = 1;
 int func(int var) {
     return 1;
 }
 
-int lassan() {
+int las() {
     int p = 9;
     return p;
 }
