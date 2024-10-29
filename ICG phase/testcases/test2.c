@@ -3,9 +3,10 @@
 
 int intReturningFunc(int a)
 {
-    int abc=1;
-    a = a + 5;
-    return 1;
+    int a=1;
+    a = 5;
+    return a;
+    a=7;
 }
 
 enum token {
