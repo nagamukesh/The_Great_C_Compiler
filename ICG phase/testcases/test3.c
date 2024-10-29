@@ -1,31 +1,14 @@
-//Function of non void type does not return 
+#include<stdio.h>
+void func(int a,char b);
 
-#include <stdio.h>
-
-int main()
-{
-    char s[10] = "Welcome!!";
-    // char s[] = "Welcome!!";
-    int a[2] = {1, 2};
-    char S[20];
-
-    int* p = &a;
-    if (s[0] == 'W')
-    {
-        if (s[1] == 'e')
-        {
-            if (s[2] == 'l')
-            {
-                printf("Welcome!!");
-            }
-
-            else
-                printf("Bug1\n");
-        }
-        else
-            printf("Bug2\n");
+int main(){
+    int x[10]={1,2,3,4,5,6};
+    printf("%d\n",x[0]);
+    if(x[0]==2){
+        printf("good only");
+    }
+    if(x[4]==5){
+    	printf("still good\n");
     }
 
-    else
-        printf("Bug3\n");
 }
